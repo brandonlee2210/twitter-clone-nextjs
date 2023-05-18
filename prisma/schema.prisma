@@ -1,0 +1,80 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+
+  relationMode = "prisma"
+}
+
+model User {
+  id              Int       @id @default(autoincrement())
+  name            String?
+  username        String?   @unique
+  bio             String?
+  email           String    @unique
+  emailVerified   DateTime?
+  image           String?
+  coverImage      String?
+  profileImage    String?
+  hashedPassword  String
+  createdAt       DateTime  @default(now())
+  updatedAt       DateTime  @updatedAt
+  hasNotification Boolean?
+
+  post         Post[]
+  comment      Comment[]
+  notification Notification[]
+  follower     Follower[]
+}
+
+model Follower {
+  userId     Int
+  followerId Int
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@id([userId, followerId])
+  @@index([userId])
+}
+
+model Post {
+  id        Int      @id @default(autoincrement())
+  body      String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  userId    Int
+
+  user    User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  comment Comment[]
+
+  @@index([userId])
+}
+
+model Comment {
+  id        Int      @id @default(autoincrement())
+  body      String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  userId    Int
+  postId    Int
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  post Post @relation(fields: [postId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
+  @@index([postId])
+}
+
+model Notification {
+  id        Int      @id @default(autoincrement())
+  body      String
+  userId    Int
+  createdAt DateTime @default(now())
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
+}
