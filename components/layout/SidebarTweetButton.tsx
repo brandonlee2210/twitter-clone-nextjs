@@ -1,5 +1,6 @@
 import { useRouter } from "next/router";
 import { FaFeather } from "react-icons/fa";
+import { signIn } from "next-auth/react";
 
 type Props = {};
 const SidebarTweetButton = (props: Props) => {
@@ -7,6 +8,7 @@ const SidebarTweetButton = (props: Props) => {
   // const loginModal = useLoginModal();
   const onClick = () => {
     // loginModal.onOpen();
+    signIn("github");
   };
 
   return (
