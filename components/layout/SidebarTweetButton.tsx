@@ -1,14 +1,17 @@
-import { useRouter } from "next/router";
+import router, { useRouter } from "next/navigation";
 import { FaFeather } from "react-icons/fa";
-import { signIn } from "next-auth/react";
+import useLoginModal from "@/hooks/useLoginModal";
+import useCurrentUser from "@/hooks/useCurrentUser";
 
-type Props = {};
-const SidebarTweetButton = (props: Props) => {
-  // const loginModal = useLoginModal()
-  // const loginModal = useLoginModal();
+const SidebarTweetButton = () => {
+  const loginModal = useLoginModal();
+  const { data: currentUser } = useCurrentUser();
+  const router = useRouter();
   const onClick = () => {
-    // loginModal.onOpen();
-    signIn("github");
+    if (!currentUser) {
+      return loginModal.onOpen();
+    }
+    router.push("/");
   };
 
   return (

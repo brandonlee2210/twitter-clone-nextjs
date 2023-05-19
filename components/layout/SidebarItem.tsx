@@ -1,11 +1,14 @@
 "use client";
 
+import useCurrentUser from "@/hooks/useCurrentUser";
+import useLoginModal from "@/hooks/useLoginModal";
+import { useRouter } from "next/navigation";
 import { IconType } from "react-icons";
 import { BsDot } from "react-icons/bs";
 
 type SidebarItemProps = {
   label: string;
-  href: string;
+  href?: string;
   icon: IconType;
   onClick?: () => void;
   auth?: boolean;
@@ -20,7 +23,24 @@ export default function SidebarItem({
   auth,
   alert,
 }: SidebarItemProps) {
-  const handleClick = () => {};
+  const router = useRouter();
+  const loginModal = useLoginModal();
+
+  const { data: currentUser } = useCurrentUser();
+
+  const handleClick = () => {
+    if (onClick) {
+      onClick();
+      return;
+    }
+
+    if (auth && !currentUser) {
+      loginModal.onOpen();
+      return;
+    } else if (href) {
+      router.push(href);
+    }
+  };
 
   return (
     <div className="flex flex-row items-center" onClick={handleClick}>
