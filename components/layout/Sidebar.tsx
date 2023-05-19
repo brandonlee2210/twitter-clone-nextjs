@@ -36,7 +36,7 @@ export default function Sidebar() {
     },
     {
       label: "Profile",
-      href: `/`,
+      href: `/users/${currentUser?.username}`,
       icon: FaUser,
       auth: true,
     },

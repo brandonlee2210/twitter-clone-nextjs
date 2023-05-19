@@ -1,13 +1,25 @@
+import useUser from "@/hooks/useUser";
+import { useRouter } from "next/navigation";
 import Image from "next/image";
 
 type avatarProps = {
-  userId: string;
+  username: string;
   isLarge?: boolean;
   hasBorder?: boolean;
 };
 
-const Avatar = ({ userId, isLarge, hasBorder }: avatarProps) => {
-  const onClick = () => {};
+const Avatar = ({ username, isLarge, hasBorder }: avatarProps) => {
+  const { data: fetchedUser } = useUser(username);
+
+  const routers = useRouter();
+
+  const onClick = (e: any) => {
+    e.stopPropagation();
+
+    const url = `/users/${username}`;
+
+    routers.push(url);
+  };
   return (
     <div
       className={`${hasBorder ? "border-4 border-black" : ""} ${
@@ -19,7 +31,7 @@ const Avatar = ({ userId, isLarge, hasBorder }: avatarProps) => {
         style={{ objectFit: "cover", borderRadius: "100%" }}
         alt="avatar"
         onClick={onClick}
-        src="/images/placeholder.png"
+        src={fetchedUser?.profileImage || "/images/placeholder.png"}
       />
     </div>
   );
