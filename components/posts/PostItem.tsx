@@ -37,7 +37,10 @@ const PostItem = ({ username, data = {} }: Props) => {
   }, [data.createdAt]);
 
   return (
-    <div className="border-b-[1px] border-neutral-200 p-5  hover:bg-neutral-200 transition">
+    <div
+      className="border-b-[1px] border-neutral-200 p-5 cursor-pointer  hover:bg-neutral-100 transition"
+      onClick={goToPost}
+    >
       <div className="flex flex-row items-start gap-3">
         <Avatar username={data.user.username} />
         <div className="max-w-[100%] flex flex-col">
@@ -51,10 +54,7 @@ const PostItem = ({ username, data = {} }: Props) => {
             <span className="text-neutral-500 cursor-pointer hover:underline hidden md:block">
               @{data.user.username}
             </span>
-            <span
-              className="text-neutral-500 text-sm hover:underline cursor-pointer"
-              onClick={goToPost}
-            >
+            <span className="text-neutral-500 text-sm hover:underline cursor-pointer">
               {createdAt} ago
             </span>
           </div>

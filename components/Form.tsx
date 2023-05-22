@@ -14,7 +14,7 @@ import usePost from "@/hooks/usePost";
 type Props = {
   placeholder: string;
   isComment?: boolean;
-  postId?: string;
+  postId?: number;
 };
 
 const Form = ({ placeholder, isComment, postId }: Props) => {
@@ -22,7 +22,7 @@ const Form = ({ placeholder, isComment, postId }: Props) => {
   const loginModal = useLoginModal();
 
   const { data: currentUser } = useCurrentUser();
-  const { mutate: mutatePost } = usePost(postId as string);
+  const { mutate: mutatePost } = usePost(postId);
   const { mutate: mutatePosts } = usePosts();
 
   const [body, setBody] = useState("");

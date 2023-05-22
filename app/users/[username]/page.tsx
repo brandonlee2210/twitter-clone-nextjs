@@ -32,7 +32,7 @@ export default function Page({
       <Header showBackArrow label={fetchedUser?.name} />
       <UserHero username={username} />
       <UserBio username={username} />
-      {/* <PostFeed userId={userId as string} />  */}
+      <PostFeed username={username} />
     </>
   );
 }

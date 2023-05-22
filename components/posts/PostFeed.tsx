@@ -9,7 +9,6 @@ type Props = {
 
 const PostFeed = ({ username }: Props) => {
   const { data: posts = [] } = usePosts(username);
-  console.log(posts);
 
   return (
     <>

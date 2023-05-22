@@ -2,7 +2,7 @@ import useSWR from "swr";
 
 import fetcher from "@/libs/fetcher";
 
-const usePost = (postId: string) => {
+const usePost = (postId?: number) => {
   // useSWR will return the data if it's there, or revalidate it if it's not
 
   const { data, error, isLoading, mutate } = useSWR(
