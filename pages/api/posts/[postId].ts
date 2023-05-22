@@ -30,6 +30,7 @@ export default async function handler(
             createdAt: "desc",
           },
         },
+        like: true,
       },
     });
 

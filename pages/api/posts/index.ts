@@ -42,6 +42,8 @@ export default async function handler(
           },
           include: {
             user: true,
+            comment: true,
+            like: true,
           },
 
           orderBy: {
@@ -54,6 +56,8 @@ export default async function handler(
         const posts = await prisma.post.findMany({
           include: {
             user: true,
+            comment: true,
+            like: true,
           },
           orderBy: {
             createdAt: "desc",

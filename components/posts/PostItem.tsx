@@ -62,13 +62,13 @@ const PostItem = ({ username, data = {} }: Props) => {
           <div className="flex flex-row items-center mt-3 gap-10">
             <div className="flex flex-row items-center text-neutral-500 gap-2 cursor-pointer transition hover:text-sky-500">
               <AiOutlineMessage size={20} />
-              <span>{data.comments?.length || 0}</span>
+              <span>{data.comment?.length || 0}</span>
             </div>
             <div
               className={`flex flex-row items-center text-neutral-500 gap-2 cursor-pointer transition hover:text-red-500 `}
             >
               <AiOutlineHeart size={20} />
-              <span>{data.likedIds?.length || 0}</span>
+              <span>{data.like?.length || 0}</span>
             </div>
           </div>
         </div>
