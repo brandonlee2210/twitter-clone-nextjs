@@ -32,13 +32,13 @@ model User {
 }
 
 model Follower {
-  userId     Int
-  followerId Int
+  username          String
+  followingUsername String
 
-  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  user User @relation(fields: [username], references: [username], onDelete: Cascade)
 
-  @@id([userId, followerId])
-  @@index([userId])
+  @@id([username, followingUsername])
+  @@index([username])
 }
 
 model Post {

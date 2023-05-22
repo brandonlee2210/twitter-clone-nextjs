@@ -4,7 +4,7 @@ import { format } from "date-fns";
 
 import useCurrentUser from "@/hooks/useCurrentUser";
 import useUser from "@/hooks/useUser";
-// import useFollow from "@/hooks/useFollow";
+import useFollow from "@/hooks/useFollow";
 import useEditModal from "@/hooks/useEditModal";
 
 import Button from "../Button";
@@ -16,6 +16,7 @@ type UserBioProps = {
 const UserBio = ({ username }: UserBioProps) => {
   const { data: currentUser } = useCurrentUser();
   const { data: fetchedUser } = useUser(username);
+  const [isFollowing, toggleFollow] = useFollow(username);
 
   const editModal = useEditModal();
 
@@ -35,9 +36,9 @@ const UserBio = ({ username }: UserBioProps) => {
         ) : (
           <Button
             secondary
-            label="Follow"
+            label={`${isFollowing() ? "Unfollow" : "Follow"}`}
             backgroundColor="black"
-            onClick={editModal.onOpen}
+            onClick={toggleFollow}
           />
         )}
       </div>

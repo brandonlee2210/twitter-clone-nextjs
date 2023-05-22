@@ -3,6 +3,7 @@ import AuthContext from "./AuthContext";
 import { Session } from "next-auth";
 import Sidebar from "@/components/layout/Sidebar";
 import FollowBar from "@/components/layout/Followbar";
+import { Toaster } from "react-hot-toast";
 
 import RegisterModal from "@/components/Modals/RegisterModal";
 import LoginModal from "@/components/Modals/LoginModal";
@@ -32,6 +33,7 @@ export default async function RootLayout({
     <html lang="en">
       <body>
         <AuthContext session={session}>
+          <Toaster />
           <div className="h-screen bg-white">
             <div className="container h-full mx-auto xl:px-[30px] max-w-[full] bg-white">
               <div className="grid grid-cols-8 h-full">
