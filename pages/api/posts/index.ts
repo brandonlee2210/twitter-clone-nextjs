@@ -26,39 +26,43 @@ export default async function handler(
       return res.status(200).json(post);
     }
 
-    // if (req.method === "GET") {
-    //   const { username } = req.query
+    if (req.method === "GET") {
+      let { username } = req.query;
 
-    //   if (username && typeof username === "string") {
-    //     const posts = await prisma.post.findMany({
-    //       where: {
-    //         username,
-    //       },
-    //       include: {
-    //         user: true,
-    //         comments: true,
-    //       },
+      if (username && typeof username === "string") {
+        const user = await prisma.user.findUnique({
+          where: {
+            username,
+          },
+        });
 
-    //       orderBy: {
-    //         createdAt: "desc",
-    //       },
-    //     })
+        const posts = await prisma.post.findMany({
+          where: {
+            userId: user!.id,
+          },
+          include: {
+            user: true,
+          },
 
-    //     return res.status(200).json(posts)
-    //   } else {
-    //     const posts = await prisma.post.findMany({
-    //       include: {
-    //         user: true,
-    //         comments: true,
-    //       },
-    //       orderBy: {
-    //         createdAt: "desc",
-    //       },
-    //     })
+          orderBy: {
+            createdAt: "desc",
+          },
+        });
 
-    //     return res.status(200).json(posts)
-    //   }
-    // }
+        return res.status(200).json(posts);
+      } else {
+        const posts = await prisma.post.findMany({
+          include: {
+            user: true,
+          },
+          orderBy: {
+            createdAt: "desc",
+          },
+        });
+
+        return res.status(200).json(posts);
+      }
+    }
   } catch (err: any) {
     console.log(err);
     res.status(500).json({ statusCode: 500, message: err.message });
