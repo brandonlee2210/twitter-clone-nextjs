@@ -32,7 +32,14 @@ const UserBio = ({ username }: UserBioProps) => {
       <div className="flex justify-end p-2">
         {currentUser?.username === username ? (
           <Button secondary label="Edit Profile" onClick={editModal.onOpen} />
-        ) : null}
+        ) : (
+          <Button
+            secondary
+            label="Follow"
+            backgroundColor="black"
+            onClick={editModal.onOpen}
+          />
+        )}
       </div>
       <div className="mt-2 px-4">
         <div className="flex flex-col">

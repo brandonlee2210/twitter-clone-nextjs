@@ -1,6 +1,7 @@
 type ButtonProps = {
   label: string;
   secondary?: boolean;
+  backgroundColor?: string;
   fullWidth?: boolean;
   large?: boolean;
   onClick: () => void;
@@ -16,6 +17,7 @@ export default function Button({
   onClick,
   disabled,
   outline,
+  backgroundColor,
 }: ButtonProps) {
   return (
     <button

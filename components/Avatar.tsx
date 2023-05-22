@@ -23,7 +23,7 @@ const Avatar = ({ username, isLarge, hasBorder }: avatarProps) => {
   return (
     <div
       className={`${hasBorder ? "border-4 border-white" : ""} ${
-        isLarge ? "h-36 w-36" : "min-h-[46px] min-w-[46px]"
+        isLarge ? "h-36 w-36" : "min-h-[50px] min-w-[50px]"
       } rounded-full hover:opacity-90 transition cursor-pointer relative`}
     >
       <Image

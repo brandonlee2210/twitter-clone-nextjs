@@ -1,4 +1,5 @@
-import router, { useRouter } from "next/navigation";
+"use client";
+import { useRouter } from "next/navigation";
 import { FaFeather } from "react-icons/fa";
 import useLoginModal from "@/hooks/useLoginModal";
 import useCurrentUser from "@/hooks/useCurrentUser";
