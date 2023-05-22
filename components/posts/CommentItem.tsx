@@ -12,7 +12,7 @@ function CommentItem({ data }: Props) {
   const router = useRouter();
 
   const goToUser = useCallback(() => {
-    router.push(`/user/${data.user.username}`);
+    router.push(`/users/${data.user.username}`);
   }, [data?.user.username, router]);
 
   const createdAt = useMemo(() => {
