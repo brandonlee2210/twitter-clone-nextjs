@@ -28,6 +28,7 @@ model User {
   comment      Comment[]
   notification Notification[]
   follower     Follower[]
+  like         Like[]
 }
 
 model Follower {
@@ -49,7 +50,20 @@ model Post {
 
   user    User      @relation(fields: [userId], references: [id], onDelete: Cascade)
   comment Comment[]
+  like    Like[]
 
+  @@index([userId])
+}
+
+model Like {
+  id     Int @id @default(autoincrement())
+  userId Int
+  postId Int
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  post Post @relation(fields: [postId], references: [id], onDelete: Cascade)
+
+  @@index([postId])
   @@index([userId])
 }
 
