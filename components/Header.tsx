@@ -16,17 +16,19 @@ const Header = ({ showBackArrow, label }: HeaderProps) => {
   };
 
   return (
-    <div className="border-b-[2px] border-neutral-300 p-5">
+    <div className="border-b-[1px] border-neutral-300 p-5">
       <div className="flex flex-row items-center gap-5">
         {showBackArrow && (
           <BiArrowBack
             onClick={handleBack}
-            color="#1DA1F2"
+            color="black"
             size={28}
             className="
               cursor-pointer 
               hover:opacity-70 
               transition
+              hover:bg-slate-300
+              rounded-full
           "
           />
         )}

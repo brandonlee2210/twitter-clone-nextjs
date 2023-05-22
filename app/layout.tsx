@@ -33,12 +33,12 @@ export default async function RootLayout({
       <body>
         <AuthContext session={session}>
           <div className="h-screen bg-white">
-            <div className="container h-full mx-auto xl:px-[30px] max-w-8xl bg-white">
-              <div className="grid grid-cols-5 h-full">
+            <div className="container h-full mx-auto xl:px-[30px] max-w-[full] bg-white">
+              <div className="grid grid-cols-8 h-full">
                 <LoginModal />
                 <RegisterModal />
                 <Sidebar />
-                <div className="col-span-4 lg:col-span-3 border-x-[2px] border-neutral-200">
+                <div className="col-span-6 lg:col-span-4 border-x-[1px] border-neutral-200">
                   {children}
                 </div>
                 <FollowBar />

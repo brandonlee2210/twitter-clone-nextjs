@@ -22,8 +22,8 @@ const Avatar = ({ username, isLarge, hasBorder }: avatarProps) => {
   };
   return (
     <div
-      className={`${hasBorder ? "border-4 border-black" : ""} ${
-        isLarge ? "h-32 w-32" : "min-h-[46px] min-w-[46px]"
+      className={`${hasBorder ? "border-4 border-white" : ""} ${
+        isLarge ? "h-36 w-36" : "min-h-[46px] min-w-[46px]"
       } rounded-full hover:opacity-90 transition cursor-pointer relative`}
     >
       <Image
@@ -32,6 +32,7 @@ const Avatar = ({ username, isLarge, hasBorder }: avatarProps) => {
         alt="avatar"
         onClick={onClick}
         src={fetchedUser?.profileImage || "/images/placeholder.png"}
+        // src="https://twitterclone-nextapp.s3.amazonaws.com/giabao.png"
       />
     </div>
   );

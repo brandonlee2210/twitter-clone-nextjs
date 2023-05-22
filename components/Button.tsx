@@ -25,7 +25,7 @@ export default function Button({
       ${fullWidth ? "w-full" : "w-fit"} 
       ${
         secondary
-          ? "bg-white text-black border-black"
+          ? "bg-white text-black border-gray-300"
           : "bg-sky-500 text-white border-sky-500"
       } 
       ${large ? "text-xl px-5 py-3" : "text-md px-4 py-2"} 

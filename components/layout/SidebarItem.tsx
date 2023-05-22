@@ -52,7 +52,7 @@ export default function SidebarItem({
       </div>
       <div className="relative hidden lg:flex items-center gap-4 p-4 rounded-full hover:bg-slate-500 hover:bg-opacity-10 cursor-pointer ">
         <Icon color="black" size={26} />
-        <p className="hidden lg:block text-[#14171A] font-semibold text-2xl">
+        <p className="hidden lg:block text-[#14171A] font-300 text-2xl">
           {label}
         </p>
         {alert ? (
