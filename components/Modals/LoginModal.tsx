@@ -1,7 +1,7 @@
 "use client";
 
 import { signIn } from "next-auth/react";
-import { useCallback, useState } from "react";
+import { useState } from "react";
 import { toast } from "react-hot-toast";
 
 import useLoginModal from "@/hooks/useLoginModal";
@@ -18,29 +18,49 @@ const LoginModal = () => {
   const [password, setPassword] = useState("");
   const [isLoading, setIsLoading] = useState(false);
 
-  const onSubmit = useCallback(async () => {
-    try {
-      setIsLoading(true);
-
-      await signIn("credentials", {
-        email,
-        password,
-      });
-
-      toast.success("Logged in");
-
-      loginModal.onClose();
-    } catch (error) {
-      toast.error("Something went wrong");
-    } finally {
-      setIsLoading(false);
+  const validate = (): boolean => {
+    if (!email) {
+      toast.error("Email is required.");
+      return false;
     }
-  }, [email, password, loginModal]);
 
-  const onToggle = useCallback(() => {
+    if (!password) {
+      toast.error("Password is required.");
+      return false;
+    }
+
+    if (password.length < 8) {
+      toast.error("Password must be at least 8 characters long.");
+      return false;
+    }
+
+    return true;
+  };
+
+  const onSubmit = async () => {
+    if (validate()) {
+      try {
+        setIsLoading(true);
+
+        await signIn("credentials", {
+          email,
+          password,
+        });
+
+        toast.success("Logged in");
+
+        loginModal.onClose();
+      } catch (error) {
+        toast.error("Something went wrong");
+      } finally {
+        setIsLoading(false);
+      }
+    }
+  };
+  const onToggle = () => {
     loginModal.onClose();
     registerModal.onOpen();
-  }, [loginModal, registerModal]);
+  };
 
   const bodyContent = (
     <div className="flex flex-col gap-4">

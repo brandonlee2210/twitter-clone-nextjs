@@ -8,7 +8,6 @@ const useFollow = (username: string) => {
   const { data: currentUser, mutate: mutateCurrentUser } = useCurrentUser();
   const { data: fetchedUser, mutate: mutateFetchedUser } = useUser(username);
 
-  console.log(currentUser);
   const loginModal = useLoginModal();
 
   const isFollowing = () => {

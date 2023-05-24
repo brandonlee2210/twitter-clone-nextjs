@@ -56,15 +56,15 @@ model Post {
 }
 
 model Like {
-  id     Int @id @default(autoincrement())
-  userId Int
-  postId Int
+  username String
+  postId   Int
 
-  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  user User @relation(fields: [username], references: [username], onDelete: Cascade)
   post Post @relation(fields: [postId], references: [id], onDelete: Cascade)
 
+  @@id([username, postId])
+  @@index([username])
   @@index([postId])
-  @@index([userId])
 }
 
 model Comment {

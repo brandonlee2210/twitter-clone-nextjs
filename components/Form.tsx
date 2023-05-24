@@ -38,13 +38,13 @@ const Form = ({ placeholder, isComment, postId }: Props) => {
       toast.success("Tweet created");
       setBody("");
       mutatePost();
-      // mutatePosts()
+      mutatePosts();
     } catch (error) {
       toast.error("Something went wrong");
     } finally {
       setIsLoading(false);
     }
-  }, [body, mutatePost, isComment, postId]);
+  }, [body, mutatePost, isComment, postId, mutatePosts]);
 
   return (
     <div className="border-b-[1px] border-neutral-200 px-5 py-5">

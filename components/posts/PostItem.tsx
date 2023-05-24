@@ -2,6 +2,8 @@
 
 import useCurrentUser from "@/hooks/useCurrentUser";
 import useLoginModal from "@/hooks/useLoginModal";
+import useLike from "@/hooks/useLike";
+
 import { formatDistanceToNowStrict } from "date-fns";
 import { useRouter } from "next/navigation";
 import { useMemo, useState, useEffect } from "react";
@@ -16,6 +18,8 @@ const PostItem = ({ username, data = {} }: Props) => {
   const router = useRouter();
   const loginModal = useLoginModal();
 
+  const [hasLiked, toggleLike] = useLike(data.id);
+
   const { data: currentUser } = useCurrentUser();
 
   const goToUser = (e: any) => {
@@ -26,6 +30,16 @@ const PostItem = ({ username, data = {} }: Props) => {
 
   const goToPost = () => {
     router.push(`/posts/${data.id}`);
+  };
+
+  const handleLike = (e: React.MouseEvent<HTMLElement>) => {
+    e.stopPropagation();
+    if (!currentUser) {
+      loginModal.onOpen();
+      return;
+    }
+
+    toggleLike();
   };
 
   const createdAt = useMemo(() => {
@@ -65,7 +79,10 @@ const PostItem = ({ username, data = {} }: Props) => {
               <span>{data.comment?.length || 0}</span>
             </div>
             <div
-              className={`flex flex-row items-center text-neutral-500 gap-2 cursor-pointer transition hover:text-red-500 `}
+              className={`flex flex-row items-center text-neutral-500 gap-2 cursor-pointer transition hover:text-red-500 ${
+                hasLiked() ? "text-red-500" : ""
+              }`}
+              onClick={handleLike}
             >
               <AiOutlineHeart size={20} />
               <span>{data.like?.length || 0}</span>

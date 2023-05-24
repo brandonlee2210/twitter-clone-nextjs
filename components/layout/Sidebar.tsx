@@ -3,7 +3,6 @@
 import { BsBell, BsHouse } from "react-icons/bs";
 import { BiLogOut } from "react-icons/bi";
 import { FaUser } from "react-icons/fa";
-import { FaFacebookMessenger } from "react-icons/fa";
 
 import { signOut } from "next-auth/react";
 
@@ -28,12 +27,7 @@ export default function Sidebar() {
       icon: BsBell,
       auth: true,
     },
-    {
-      label: "Messages",
-      href: "/",
-      icon: FaFacebookMessenger,
-      auth: true,
-    },
+
     {
       label: "Profile",
       href: `/users/${currentUser?.username}`,

@@ -1,7 +1,6 @@
 import prisma from "@/libs/prismadb";
 
 import serverAuth from "@/libs/serverAuth";
-import AWS from "aws-sdk";
 import S3 from "aws-sdk/clients/s3";
 import { NextApiRequest, NextApiResponse } from "next";
 
@@ -29,25 +28,37 @@ export default async function handler(
         currentUser?.username,
         "profile"
       );
-
-      console.log(coverImage, profileImage);
     }
 
     if (!name) {
       return res.status(400).json({ message: "Name required" });
     }
 
-    const user = await prisma.user.updateMany({
-      where: {
-        username: currentUser.username,
-      },
-      data: {
-        name,
-        bio,
-        coverImage,
-        profileImage,
-      },
-    });
+    let user;
+
+    if (!coverImage || !profileImage) {
+      user = await prisma.user.updateMany({
+        where: {
+          username: currentUser.username,
+        },
+        data: {
+          name,
+          bio,
+        },
+      });
+    } else {
+      user = await prisma.user.updateMany({
+        where: {
+          username: currentUser.username,
+        },
+        data: {
+          name,
+          bio,
+          coverImage,
+          profileImage,
+        },
+      });
+    }
 
     return res.status(200).json(user);
   } catch (err) {

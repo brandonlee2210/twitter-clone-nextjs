@@ -28,31 +28,66 @@ export default function RegisterModal() {
     loginModal.onOpen();
   };
 
+  const validate = (): boolean => {
+    if (!email) {
+      toast.error("Email is required.");
+      return false;
+    }
+
+    if (!password) {
+      toast.error("Password is required.");
+      return false;
+    }
+
+    if (!username) {
+      toast.error("Username is required.");
+      return false;
+    }
+
+    if (!name) {
+      toast.error("Name is required.");
+      return false;
+    }
+
+    if (password.length < 8) {
+      toast.error("Password must be at least 8 characters long.");
+      return false;
+    }
+
+    if (username.length < 3) {
+      toast.error("Username must be at least 3 characters long.");
+      return false;
+    }
+
+    return true;
+  };
+
   const onSubmit = async () => {
-    try {
-      setIsLoading(true);
+    if (validate()) {
+      try {
+        setIsLoading(true);
+        await axios.post("/api/register", {
+          email,
+          password,
+          username,
+          name,
+        });
 
-      await axios.post("/api/register", {
-        email,
-        password,
-        username,
-        name,
-      });
+        setIsLoading(false);
 
-      setIsLoading(false);
+        toast.success("Account created successfully!");
 
-      toast.success("Account created successfully!");
+        signIn("credentials", {
+          email,
+          password,
+        });
 
-      signIn("credentials", {
-        email,
-        password,
-      });
-
-      registerModal.onClose();
-    } catch (error) {
-      toast.error("Something went wrong, please try again later.");
-    } finally {
-      setIsLoading(false);
+        registerModal.onClose();
+      } catch (error) {
+        toast.error("Something went wrong, please try again later.");
+      } finally {
+        setIsLoading(false);
+      }
     }
   };
 
