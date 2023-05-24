@@ -10,6 +10,8 @@ import Header from "@/components/Header";
 import UserBio from "@/components/users/UserBio";
 import UserHero from "@/components/users/UserHero";
 import EditModal from "@/components/Modals/EditModal";
+import { Suspense } from "react";
+import Loading from "./loading";
 
 export default function Page({
   params: { username },
@@ -32,7 +34,9 @@ export default function Page({
       <Header showBackArrow label={fetchedUser?.name} />
       <UserHero username={username} />
       <UserBio username={username} />
-      <PostFeed username={username} />
+      <Suspense fallback={<Loading />}>
+        <PostFeed username={username} />
+      </Suspense>
     </>
   );
 }

@@ -7,14 +7,8 @@ import CommentFeed from "@/components/posts/CommentFeed";
 import ClipLoader from "react-spinners/ClipLoader";
 import usePost from "@/hooks/usePost";
 import { useParams } from "next/navigation";
-
-// export async function generateStaticParams() {
-//   const posts = await fetcher("http://localhost:3000/api/posts");
-
-//   return posts.map((post: Record<string, any>) => ({
-//     postId: String(post.id),
-//   }));
-// }
+import { Suspense } from "react";
+import Loading from "./loading";
 
 export default function Page() {
   const params = useParams();
@@ -34,7 +28,9 @@ export default function Page() {
   return (
     <>
       <Header label="Tweet" showBackArrow />
-      <PostItem data={post} username={post.user.username} />
+      <Suspense fallback={<Loading />}>
+        <PostItem data={post} username={post.user.username} />
+      </Suspense>
       <Form placeholder="Tweet your reply" isComment postId={+postId} />
       <CommentFeed comments={post?.comment} />
     </>
