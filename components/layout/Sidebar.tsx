@@ -15,6 +15,10 @@ import useCurrentUser from "@/hooks/useCurrentUser";
 export default function Sidebar() {
   const { data: currentUser } = useCurrentUser();
 
+  const handleSignout = async () => {
+    await signOut();
+  };
+
   const items = [
     {
       label: "Home",
@@ -23,9 +27,10 @@ export default function Sidebar() {
     },
     {
       label: "Notifications",
-      href: "/",
+      href: "/notifications",
       icon: BsBell,
       auth: true,
+      alert: currentUser?.hasNotification,
     },
 
     {
@@ -47,12 +52,13 @@ export default function Sidebar() {
               href={item.href}
               icon={item.icon}
               key={item.label}
+              alert={item.alert}
               auth={item.auth}
             />
           ))}
           {currentUser && (
             <SidebarItem
-              onClick={() => signOut()}
+              onClick={handleSignout}
               icon={BiLogOut}
               label="Logout"
             />

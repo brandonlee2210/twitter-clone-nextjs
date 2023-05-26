@@ -1,4 +1,5 @@
-import { useMemo } from "react";
+"use client";
+import { useEffect, useMemo, useState } from "react";
 import { BiCalendar } from "react-icons/bi";
 import { format } from "date-fns";
 
@@ -8,6 +9,7 @@ import useFollow from "@/hooks/useFollow";
 import useEditModal from "@/hooks/useEditModal";
 
 import Button from "../Button";
+import useCountFollow from "@/hooks/useCountFollow";
 
 type UserBioProps = {
   username: string;
@@ -16,6 +18,9 @@ type UserBioProps = {
 const UserBio = ({ username }: UserBioProps) => {
   const { data: currentUser } = useCurrentUser();
   const { data: fetchedUser } = useUser(username);
+
+  const { data: fetchedFollow } = useCountFollow(username);
+
   const [isFollowing, toggleFollow] = useFollow(username);
 
   const editModal = useEditModal();
@@ -65,12 +70,14 @@ const UserBio = ({ username }: UserBioProps) => {
         </div>
         <div className="flex flex-row items-center mt-2 gap-6">
           <div className="flex flex-row items-center gap-1">
-            <p className="text-black font-bold">0</p>
+            <p className="text-black font-bold">
+              {fetchedFollow?.followingAmount || 0}
+            </p>
             <p className="text-neutral-500">Following</p>
           </div>
           <div className="flex flex-row items-center gap-1">
             <p className="text-black font-bold">
-              {fetchedUser?.followersCount || 0}
+              {fetchedFollow?.followersAmount || 0}
             </p>
             <p className="text-neutral-500">Followers</p>
           </div>

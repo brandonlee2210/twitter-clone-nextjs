@@ -14,6 +14,7 @@ export default async function handler(
   try {
     if (req.method === "POST") {
       const { currentUser } = await serverAuth(req, res);
+
       const { body } = req.body;
 
       const post = await prisma.post.create({
@@ -21,6 +22,34 @@ export default async function handler(
           body,
           userId: currentUser.id,
         },
+      });
+
+      // check all current user's followers
+      const followers = await prisma.follower.findMany({
+        where: {
+          followingUsername: currentUser.username!,
+        },
+      });
+
+      followers.forEach(async (follower) => {
+        const notification = prisma.notification.create({
+          data: {
+            body: `${currentUser.name} posted a tweet`,
+            username: follower.username,
+          },
+        });
+
+        const updateUser = prisma.user.update({
+          where: {
+            username: follower.username,
+          },
+          data: {
+            hasNotification: true,
+          },
+        });
+
+        const result = await Promise.all([notification, updateUser]);
+        console.log(result);
       });
 
       return res.status(200).json(post);

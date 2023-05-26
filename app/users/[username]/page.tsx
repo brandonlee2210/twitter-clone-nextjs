@@ -1,6 +1,6 @@
 "use client";
 
-import { useRouter } from "next/navigation";
+import { useRouter } from "next/router";
 import { ClipLoader } from "react-spinners";
 
 import useUser from "@/hooks/useUser";
@@ -13,12 +13,10 @@ import EditModal from "@/components/Modals/EditModal";
 import { Suspense } from "react";
 import Loading from "./loading";
 
-export default function Page({
-  params: { username },
-}: {
-  params: { username: string };
-}) {
-  const { data: fetchedUser, isLoading } = useUser(username);
+export default function Page() {
+  const router = useRouter();
+  const { username } = router.query;
+  const { data: fetchedUser, isLoading } = useUser(username as string);
 
   if (isLoading || !fetchedUser) {
     return (
@@ -32,10 +30,10 @@ export default function Page({
     <>
       <EditModal />
       <Header showBackArrow label={fetchedUser?.name} />
-      <UserHero username={username} />
-      <UserBio username={username} />
+      <UserHero username={username as string} />
+      <UserBio username={username as string} />
       <Suspense fallback={<Loading />}>
-        <PostFeed username={username} />
+        <PostFeed username={username as string} />
       </Suspense>
     </>
   );

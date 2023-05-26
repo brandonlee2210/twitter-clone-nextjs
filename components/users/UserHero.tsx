@@ -17,6 +17,7 @@ const UserHero = ({ username }: UserHeroProps) => {
           <Image
             src={fetchedUser.coverImage}
             fill
+            sizes="100%"
             alt="Cover Image"
             style={{ objectFit: "cover" }}
           />

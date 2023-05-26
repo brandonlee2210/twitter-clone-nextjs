@@ -3,10 +3,13 @@ import useCurrentUser from "./useCurrentUser";
 import useLoginModal from "./useLoginModal";
 import useUser from "./useUser";
 import { toast } from "react-hot-toast";
+import useCountFollow from "./useCountFollow";
 
 const useFollow = (username: string) => {
   const { data: currentUser, mutate: mutateCurrentUser } = useCurrentUser();
   const { data: fetchedUser, mutate: mutateFetchedUser } = useUser(username);
+  const { data: fetchedFollow, mutate: mutateFollow } =
+    useCountFollow(username);
 
   const loginModal = useLoginModal();
 
@@ -38,8 +41,10 @@ const useFollow = (username: string) => {
           username: username,
         });
       }
+      mutateFollow();
       mutateCurrentUser();
       mutateFetchedUser();
+
       toast.success("Success");
     } catch (err) {
       toast.error("Something went wrong");

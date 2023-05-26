@@ -28,6 +28,7 @@ const Avatar = ({ username, isLarge, hasBorder }: avatarProps) => {
     >
       <Image
         fill
+        sizes="100%"
         style={{ objectFit: "cover", borderRadius: "100%" }}
         alt="avatar"
         onClick={onClick}

@@ -21,26 +21,26 @@ export default async function handler(
         where: {
           id: postId,
         },
+        include: {
+          user: true,
+        },
       });
 
-      // if (post?.userId) {
-      //   await prisma.notification.create({
-      //     data: {
-      //       body: "Someone liked your tweet",
-      //       userId: post.userId,
-      //     },
-      //   })
+      if (post) {
+        await prisma.notification.create({
+          data: {
+            body: "Someone liked your tweet",
+            username: post.user.username as string,
+          },
+        });
 
-      //   await prisma.user.update({
-      //     where: { id: post.userId },
-      //     data: {
-      //       hasNotification: true,
-      //     },
-      //   })
-      // }
-      // } catch (err: any) {
-      //   return res.status(500).json({ message: err.message })
-      // }
+        await prisma.user.update({
+          where: { username: post.user.username as string },
+          data: {
+            hasNotification: true,
+          },
+        });
+      }
 
       if (!post) {
         throw new Error("Invalid ID");

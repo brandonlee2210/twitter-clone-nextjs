@@ -6,7 +6,7 @@ import useLike from "@/hooks/useLike";
 
 import { formatDistanceToNowStrict } from "date-fns";
 import { useRouter } from "next/navigation";
-import { useMemo, useState, useEffect } from "react";
+import { useMemo } from "react";
 import Avatar from "../Avatar";
 import { AiOutlineHeart, AiOutlineMessage } from "react-icons/ai";
 
