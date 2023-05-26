@@ -25,7 +25,7 @@ const PostItem = ({ username, data = {} }: Props) => {
   const goToUser = (e: any) => {
     e.stopPropagation();
 
-    router.push(`/users/${data.user.id}`);
+    router.push(`/users/${data.user.username}`);
   };
 
   const goToPost = () => {

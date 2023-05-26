@@ -1,6 +1,6 @@
 "use client";
 
-import { useRouter } from "next/router";
+import { useParams } from "next/navigation";
 import { ClipLoader } from "react-spinners";
 
 import useUser from "@/hooks/useUser";
@@ -14,8 +14,9 @@ import { Suspense } from "react";
 import Loading from "./loading";
 
 export default function Page() {
-  const router = useRouter();
-  const { username } = router.query;
+  const params = useParams();
+  const { username } = params as { username: string };
+
   const { data: fetchedUser, isLoading } = useUser(username as string);
 
   if (isLoading || !fetchedUser) {
