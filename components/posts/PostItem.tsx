@@ -18,7 +18,7 @@ const PostItem = ({ username, data = {} }: Props) => {
   const router = useRouter();
   const loginModal = useLoginModal();
 
-  const [hasLiked, toggleLike] = useLike(data.id);
+  const [hasLiked, toggleLike] = useLike(data.id, username!);
 
   const { data: currentUser } = useCurrentUser();
 

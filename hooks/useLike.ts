@@ -4,8 +4,10 @@ import useLoginModal from "./useLoginModal";
 import usePost from "./usePost";
 import usePosts from "./usePosts";
 import axios from "axios";
+import useUser from "./useUser";
 
-const useLike = (postId: string, username?: string) => {
+const useLike = (postId: string, username: string) => {
+  const { mutate: mutateUser } = useUser(username!);
   const { data: currentUser, mutate: mutateCurrentUser } = useCurrentUser();
   const { data: fetchedPost, mutate: mutateFetchedPost } = usePost(+postId);
   const { mutate: mutateFetchedPosts } = usePosts(username);
@@ -46,6 +48,7 @@ const useLike = (postId: string, username?: string) => {
       }
 
       await request;
+      mutateUser();
       mutateFetchedPost();
       mutateCurrentUser();
       mutateFetchedPosts();
