@@ -52,3 +52,8 @@ export default async function RootLayout({
     </html>
   );
 }
+
+export const metada = {
+  title: "My twitter",
+  description: "My twitter description",
+};
