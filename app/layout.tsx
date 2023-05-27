@@ -11,11 +11,14 @@ import LoginModal from "@/components/Modals/LoginModal";
 import { headers } from "next/headers";
 
 async function getSession(cookie: string): Promise<Session> {
-  const response = await fetch(`http://localhost:3000/api/auth/session`, {
-    headers: {
-      cookie,
-    },
-  });
+  const response = await fetch(
+    `https://twitter-clone-nextjs-gnok.vercel.app/api/auth/session`,
+    {
+      headers: {
+        cookie,
+      },
+    }
+  );
 
   const session = await response.json();
 
