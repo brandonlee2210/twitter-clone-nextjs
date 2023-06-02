@@ -17,7 +17,7 @@ export default async function handler(
 
     let { name, bio, coverImage, profileImage } = req.body;
 
-    if (coverImage) {
+    if (coverImage.length > 1000) {
       coverImage = await imageUpload(
         coverImage,
         currentUser?.username,
@@ -25,7 +25,7 @@ export default async function handler(
       );
     }
 
-    if (profileImage) {
+    if (profileImage.length > 1000) {
       profileImage = await imageUpload(
         profileImage,
         currentUser?.username,
@@ -37,53 +37,17 @@ export default async function handler(
       return res.status(400).json({ message: "Name required" });
     }
 
-    let user;
-
-    if (!coverImage && !profileImage) {
-      user = await prisma.user.updateMany({
-        where: {
-          username: currentUser.username,
-        },
-        data: {
-          name,
-          bio,
-        },
-      });
-    } else if (coverImage && !profileImage) {
-      user = await prisma.user.updateMany({
-        where: {
-          username: currentUser.username,
-        },
-        data: {
-          name,
-          bio,
-          coverImage,
-        },
-      });
-    } else if (!coverImage && profileImage) {
-      user = await prisma.user.updateMany({
-        where: {
-          username: currentUser.username,
-        },
-        data: {
-          name,
-          bio,
-          profileImage,
-        },
-      });
-    } else {
-      user = await prisma.user.updateMany({
-        where: {
-          username: currentUser.username,
-        },
-        data: {
-          name,
-          bio,
-          coverImage,
-          profileImage,
-        },
-      });
-    }
+    let user = await prisma.user.updateMany({
+      where: {
+        username: currentUser.username,
+      },
+      data: {
+        name,
+        bio,
+        coverImage,
+        profileImage,
+      },
+    });
 
     return res.status(200).json(user);
   } catch (err) {
@@ -128,7 +92,7 @@ async function imageUpload(
   // This won't be needed if they're uploading their avatar, hence the filename, userAvatar.js.
   const params = {
     Bucket: S3_BUCKET as string,
-    Key: `${username}.${category}`, // type is not required
+    Key: `${username}.${category}.${type}`, // type is not required
     Body: base64Data,
     ContentEncoding: "base64", // required
     ContentType: `image/${type}`, // required. Notice the back ticks
