@@ -17,12 +17,15 @@ export default async function handler(
 
     let { name, bio, coverImage, profileImage } = req.body;
 
-    if (coverImage || profileImage) {
+    if (coverImage) {
       coverImage = await imageUpload(
         coverImage,
         currentUser?.username,
         "cover"
       );
+    }
+
+    if (profileImage) {
       profileImage = await imageUpload(
         profileImage,
         currentUser?.username,
@@ -36,7 +39,7 @@ export default async function handler(
 
     let user;
 
-    if (!coverImage || !profileImage) {
+    if (!coverImage && !profileImage) {
       user = await prisma.user.updateMany({
         where: {
           username: currentUser.username,
@@ -44,6 +47,28 @@ export default async function handler(
         data: {
           name,
           bio,
+        },
+      });
+    } else if (coverImage && !profileImage) {
+      user = await prisma.user.updateMany({
+        where: {
+          username: currentUser.username,
+        },
+        data: {
+          name,
+          bio,
+          coverImage,
+        },
+      });
+    } else if (!coverImage && profileImage) {
+      user = await prisma.user.updateMany({
+        where: {
+          username: currentUser.username,
+        },
+        data: {
+          name,
+          bio,
+          profileImage,
         },
       });
     } else {
@@ -103,7 +128,7 @@ async function imageUpload(
   // This won't be needed if they're uploading their avatar, hence the filename, userAvatar.js.
   const params = {
     Bucket: S3_BUCKET as string,
-    Key: `${username}.${category}.${type}`, // type is not required
+    Key: `${username}.${category}`, // type is not required
     Body: base64Data,
     ContentEncoding: "base64", // required
     ContentType: `image/${type}`, // required. Notice the back ticks
